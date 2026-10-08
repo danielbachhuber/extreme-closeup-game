@@ -1,0 +1,13 @@
+{
+  "name": "extreme-closeup-game",
+  "version": "1.0.0",
+  "description": "A small live guessing app for the Extreme Close-Up video call game.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

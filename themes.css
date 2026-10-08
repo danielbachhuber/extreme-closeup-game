@@ -1,0 +1,175 @@
+/* Design directions, selected with ?theme=<name>. Palette from the New_ Public deck. */
+:root {
+  --indigo: #3f3f80;
+  --mint: #91d7be;
+  --mint-light: #e8f7f0;
+  --coral: #f07d7d;
+  --coral-light: #fdecea;
+  --cream: #fef7f2;
+  --lavender: #c9c6f0;
+}
+body[class*="t-"] { font-family: 'Space Mono', ui-monospace, monospace; font-size: 16px; color: var(--indigo); }
+body[class*="t-"] h1, body[class*="t-"] h2 { font-family: 'Raleway', system-ui, sans-serif; }
+body[class*="t-"] button { font-family: 'Raleway', system-ui, sans-serif; }
+
+/* A. Deck: each screen is a slide in the deck's colors */
+body.t-deck { background: var(--indigo); color: #fff; transition: background .3s; }
+body.t-deck:has(#guess:not([hidden])) { background: var(--mint); color: var(--indigo); }
+body.t-deck:has(#waiting:not([hidden])) { background: var(--coral); color: #fff; }
+body.t-deck:has(#revealed:not([hidden])) { background: var(--cream); color: var(--indigo); }
+.t-deck h1 { font-size: 22px; font-weight: 700; }
+.t-deck h1::after { content: ' //'; opacity: .5; }
+.t-deck h2 { font-size: 44px; font-weight: 800; line-height: 1.05; margin: 4px 0 8px; }
+.t-deck .round { color: inherit; opacity: .75; font-family: 'Space Mono', monospace; letter-spacing: .1em; }
+.t-deck .me, .t-deck .note, .t-deck .who { color: inherit; opacity: .8; }
+.t-deck .link { color: inherit; }
+.t-deck input[type=text] { border: 2px solid var(--indigo); border-radius: 0; font-family: 'Space Mono', monospace; color: var(--indigo); }
+.t-deck button { background: var(--indigo); border-radius: 999px; padding: 12px 26px; }
+.t-deck button.secondary { background: var(--coral); }
+.t-deck .card { background: transparent; border: 2px solid #fff; border-radius: 0; color: #fff; }
+.t-deck .big { font-family: 'Raleway', sans-serif; font-size: 34px; font-weight: 800; }
+.t-deck .chip { background: rgba(255,255,255,.25); border-radius: 0; }
+.t-deck:has(#guess:not([hidden])) .chip { background: rgba(63,63,128,.12); }
+.t-deck ul.answers li { background: var(--mint-light); border: 1px solid var(--indigo); border-radius: 0; margin-bottom: -1px; }
+.t-deck ul.answers li.owner { background: var(--indigo); color: #fff; border: 1px solid var(--indigo); }
+.t-deck ul.answers li.owner .who, .t-deck ul.answers li.owner .tag { color: var(--mint); }
+.t-deck .host { border-top: 2px dotted currentColor; }
+
+/* B. Lens: everything happens inside a magnifying glass */
+body.t-lens { background: var(--cream); }
+.t-lens h1 { font-weight: 800; font-size: 26px; }
+.t-lens .round {
+  width: 132px; height: 132px; border-radius: 50%; margin: 0 auto 18px;
+  display: grid; place-items: center; text-align: center;
+  background: radial-gradient(circle at 35% 35%, #fff 0 30%, var(--mint-light) 31%);
+  border: 10px solid var(--indigo); color: var(--indigo); font-size: 18px; position: relative;
+  box-shadow: inset 0 0 0 4px var(--mint);
+}
+.t-lens .round::after {
+  content: ''; position: absolute; width: 14px; height: 60px; background: var(--indigo); border-radius: 7px;
+  right: -26px; bottom: -48px; transform: rotate(-45deg);
+}
+.t-lens h2 { text-align: center; font-size: 30px; font-weight: 800; margin-top: 30px; }
+.t-lens label { font-family: 'Space Mono', monospace; font-size: 14px; text-transform: uppercase; letter-spacing: .06em; }
+.t-lens input[type=text] { border: 2px solid var(--indigo); border-radius: 999px; padding: 12px 20px; }
+.t-lens button { background: var(--coral); border-radius: 999px; box-shadow: 0 4px 0 var(--indigo); }
+.t-lens button.secondary { background: var(--indigo); box-shadow: 0 4px 0 var(--mint); }
+.t-lens .card {
+  width: 260px; height: 260px; border-radius: 50%; margin: 30px auto 10px; display: grid; place-content: center; text-align: center;
+  border: 12px solid var(--indigo); background: var(--mint-light); box-shadow: inset 0 0 0 6px var(--mint);
+}
+.t-lens .card .big { font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 26px; padding: 0 24px; }
+.t-lens #waiting .note { text-align: center; margin-top: 50px; }
+.t-lens #waiting .round { display: none; }
+.t-lens .chip { background: var(--lavender); color: var(--indigo); }
+.t-lens ul.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.t-lens ul.answers li { margin: 0; border-radius: 999px; border: 2px solid var(--indigo); text-align: center; background: #fff; }
+.t-lens ul.answers li.owner { grid-column: 1 / -1; border-radius: 24px; border: 4px solid var(--indigo); background: var(--mint); font-family: 'Raleway', sans-serif; font-weight: 800; font-size: 22px; }
+.t-lens ul.answers li.owner .tag { color: var(--indigo); }
+.t-lens .tag::before { content: '🔍 '; }
+
+/* C. Game show: dark stage, lit tiles, chunky buttons */
+body.t-show { background: radial-gradient(ellipse at top, #57579e, var(--indigo) 55%, #24244d); color: #fff; min-height: 100vh; }
+.t-show h1 { font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .04em; color: var(--mint); text-shadow: 0 0 18px rgba(145,215,190,.6); }
+.t-show .me, .t-show .note, .t-show .who { color: #cfd0f2; }
+.t-show .link { color: var(--mint); }
+.t-show .round { display: inline-block; background: var(--coral); color: #fff; padding: 4px 14px; border-radius: 6px; font-size: 16px; }
+.t-show h2 { font-size: 40px; font-weight: 800; text-transform: uppercase; }
+.t-show input[type=text] { background: #24244d; color: #fff; border: 2px solid var(--mint); border-radius: 10px; font-family: 'Space Mono', monospace; }
+.t-show button { background: var(--coral); border-radius: 12px; box-shadow: 0 6px 0 #b54f4f; text-transform: uppercase; letter-spacing: .04em; font-weight: 800; }
+.t-show button.secondary { background: var(--mint); color: var(--indigo); box-shadow: 0 6px 0 #5ea88e; }
+.t-show .card { background: #24244d; border: 3px solid var(--mint); box-shadow: 0 0 24px rgba(145,215,190,.45); color: #fff; }
+.t-show .big { font-family: 'Raleway', sans-serif; font-size: 30px; font-weight: 800; }
+.t-show .chip { background: transparent; border: 2px solid var(--mint); color: var(--mint); }
+.t-show .chip::before { content: '● '; color: var(--mint); text-shadow: 0 0 8px var(--mint); }
+.t-show ul.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.t-show ul.answers li { margin: 0; background: var(--coral); color: #fff; border: 0; border-radius: 10px; font-weight: 700; min-height: 84px; box-shadow: 0 5px 0 #b54f4f; }
+.t-show ul.answers li .who { color: #fff; opacity: .85; }
+.t-show ul.answers li.owner { grid-column: 1 / -1; background: var(--mint); color: var(--indigo); border: 0; box-shadow: 0 5px 0 #5ea88e, 0 0 30px rgba(145,215,190,.7); font-size: 24px; }
+.t-show ul.answers li.owner .who, .t-show ul.answers li.owner .tag { color: var(--indigo); }
+.t-show .tag::before { content: '★ '; }
+.t-show .host { border-top: 2px dashed rgba(255,255,255,.3); }
+
+/* D. Pinboard: guesses go up as sticky notes */
+body.t-pin { background: var(--cream) radial-gradient(rgba(63,63,128,.18) 1px, transparent 1.5px) 0 0 / 18px 18px; }
+.t-pin h1 { font-weight: 800; }
+.t-pin .round { color: var(--coral); }
+.t-pin h2 { font-size: 30px; font-weight: 800; }
+.t-pin form#guess, .t-pin .card {
+  background: #fff6a8; border: 0; border-radius: 2px; padding: 22px 22px 26px; transform: rotate(-1deg);
+  box-shadow: 0 10px 18px -8px rgba(63,63,128,.4); position: relative;
+}
+.t-pin form#guess::before, .t-pin .card::before {
+  content: ''; position: absolute; top: -10px; left: 50%; width: 18px; height: 18px; margin-left: -9px;
+  border-radius: 50%; background: var(--coral); box-shadow: 0 2px 2px rgba(0,0,0,.3);
+}
+.t-pin input[type=text] { background: transparent; border: 0; border-bottom: 2px solid var(--indigo); border-radius: 0; padding-left: 0; font-family: 'Space Mono', monospace; }
+.t-pin button { background: var(--indigo); border-radius: 4px; }
+.t-pin button.secondary { background: var(--coral); }
+.t-pin .card { background: var(--mint); transform: rotate(1.5deg); }
+.t-pin .big { font-size: 26px; }
+.t-pin .chip { background: #fff; border: 1px solid var(--indigo); border-radius: 2px; }
+.t-pin ul.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.t-pin ul.answers li {
+  margin: 0; border: 0; border-radius: 2px; min-height: 110px; padding: 16px; font-weight: 700;
+  box-shadow: 0 10px 16px -8px rgba(63,63,128,.45); background: var(--lavender);
+}
+.t-pin ul.answers li:nth-child(3n) { background: var(--coral-light); transform: rotate(2deg); }
+.t-pin ul.answers li:nth-child(3n+1) { background: #fff6a8; transform: rotate(-2deg); }
+.t-pin ul.answers li:nth-child(3n+2) { background: var(--mint-light); transform: rotate(1deg); }
+.t-pin ul.answers li.owner { grid-column: 1 / -1; background: var(--mint); transform: rotate(-.5deg); border: 3px solid var(--indigo); font-size: 22px; }
+.t-pin ul.answers li.owner .tag { color: var(--indigo); }
+
+/* E. Case file: an evidence log in the deck's mono type */
+body.t-case { background: var(--cream); }
+.t-case main { border-left: 3px solid var(--indigo); }
+.t-case h1 { font-family: 'Space Mono', monospace; font-size: 18px; text-transform: uppercase; letter-spacing: .08em; }
+.t-case h1::before { content: 'CASE FILE // '; color: var(--coral); }
+.t-case .round { font-family: 'Space Mono', monospace; color: var(--indigo); font-size: 14px; }
+.t-case .round::before { content: 'EXHIBIT '; color: var(--coral); }
+.t-case h2 { font-family: 'Raleway', sans-serif; font-size: 34px; font-weight: 800; }
+.t-case h2::after { content: ' (Describe the evidence.)'; display: block; font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 400; opacity: .7; }
+.t-case label { text-transform: uppercase; font-size: 13px; letter-spacing: .08em; }
+.t-case input[type=text] { border: 1px solid var(--indigo); border-radius: 0; background: #fff; font-family: 'Space Mono', monospace; }
+.t-case button { background: var(--indigo); border-radius: 0; text-transform: uppercase; letter-spacing: .08em; font-family: 'Space Mono', monospace; font-size: 14px; }
+.t-case button.secondary { background: transparent; color: var(--indigo); border: 1px solid var(--indigo); }
+.t-case .card { border: 1px solid var(--indigo); border-radius: 0; background: var(--mint-light); position: relative; }
+.t-case .card::after {
+  content: 'FILED'; position: absolute; right: 16px; top: 18px; transform: rotate(-12deg);
+  border: 3px solid var(--coral); color: var(--coral); padding: 2px 10px; font-weight: 700; letter-spacing: .15em;
+}
+.t-case .chip { background: transparent; border: 1px solid var(--indigo); border-radius: 0; font-size: 13px; }
+.t-case ul.answers { counter-reset: guess; border: 1px solid var(--indigo); background: #fff; }
+.t-case ul.answers li { border: 0; border-bottom: 1px solid var(--mint); border-radius: 0; margin: 0; counter-increment: guess; padding-left: 52px; position: relative; }
+.t-case ul.answers li::before { content: counter(guess, decimal-leading-zero); position: absolute; left: 14px; top: 12px; color: var(--coral); font-weight: 700; }
+.t-case ul.answers li.owner { background: var(--mint-light); border: 0; border-bottom: 2px solid var(--indigo); }
+.t-case ul.answers li.owner::after {
+  content: 'IDENTIFIED'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%) rotate(-8deg);
+  border: 3px solid var(--coral); color: var(--coral); padding: 2px 8px; font-weight: 700; letter-spacing: .12em; font-size: 13px;
+}
+.t-case ul.answers li.owner .tag { display: none; }
+.t-case .host { border-top: 1px solid var(--indigo); }
+
+/* Shared fixes across directions */
+body[class*="t-"] header { flex-wrap: wrap; row-gap: 4px; }
+body[class*="t-"] h1 { white-space: nowrap; }
+body[class*="t-"] button.link {
+  background: none; box-shadow: none; padding: 0; margin: 0; border: 0; border-radius: 0;
+  color: inherit; text-transform: none; letter-spacing: normal; font: inherit; text-decoration: underline;
+}
+.t-lens .card { width: 300px; height: 300px; }
+.t-lens .card .big { font-size: 20px; line-height: 1.3; }
+.t-lens .card .who { margin-top: 20px; }
+.t-lens ul.answers li { border-radius: 28px; }
+.t-case main { min-height: 100vh; }
+.t-case h2::after { content: none; }
+.t-case #guess h2::after { content: ' (Describe the evidence.)'; }
+.t-pin form#signin {
+  background: var(--lavender); border-radius: 2px; padding: 22px 22px 26px; transform: rotate(1deg);
+  box-shadow: 0 10px 18px -8px rgba(63,63,128,.4); position: relative;
+}
+.t-pin form#signin::before {
+  content: ''; position: absolute; top: -10px; left: 50%; width: 18px; height: 18px; margin-left: -9px;
+  border-radius: 50%; background: var(--coral); box-shadow: 0 2px 2px rgba(0,0,0,.3);
+}
+.t-pin #resetBtn { background: transparent; color: var(--indigo); border: 2px solid var(--indigo); }
